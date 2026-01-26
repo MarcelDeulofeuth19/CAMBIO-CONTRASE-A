@@ -18,16 +18,29 @@ def change_password():
             }
             try:
                 response = requests.post(API_URL, json=payload, timeout=10)
+                # Mostrar respuesta y status para depuración
+                print(f"[DEBUG] URL: {API_URL}")
+                print(f"[DEBUG] Payload: {payload}")
+                print(f"[DEBUG] Status code: {response.status_code}")
+                print(f"[DEBUG] Response text: {response.text}")
                 if response.status_code == 200:
-                    message = 'Se ha enviado el correo para cambio de contraseña.'
-                else:
                     try:
-                        api_error = response.json().get('message') or response.text
+                        data = response.json()
+                        if data.get('status') == 'error':
+                            message = "No se pudo enviar el correo. Por favor valida que el correo sea correcto y esté registrado."
+                        else:
+                            # Si el mensaje es de éxito, mostrarlo, si no, pedir validar correo
+                            msg = data.get('message', '').lower()
+                            if 'exitosamente' in msg or 'enviado' in msg:
+                                message = data.get('message', 'Se ha enviado el correo para cambio de contraseña.')
+                            else:
+                                message = "No se pudo enviar el correo. Por favor valida que el correo sea correcto y esté registrado."
                     except Exception:
-                        api_error = response.text
-                    message = f'Error al enviar el correo: {api_error}'
+                        message = 'Se ha enviado el correo para cambio de contraseña.'
+                else:
+                    message = "No se pudo enviar el correo. Por favor valida que el correo sea correcto y esté registrado."
             except Exception as e:
-                message = 'Error de conexión. Intenta más tarde.'
+                message = f'Error de conexión o formato: {str(e)}'
         else:
             message = 'Por favor ingresa tu correo.'
         session['message'] = message

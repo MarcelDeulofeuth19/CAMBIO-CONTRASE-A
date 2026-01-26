@@ -34,11 +34,47 @@
                         <div class="input-container input-email">
                             <div class="rectangle"></div>
                             <img class="element-email" src="https://estudios.alocredit.co/assets/img/v3/1904660-email-envelope-letter-mail-message-post-send-122510-1.svg"/>
-                            <input type="email" name="email" class="Email" id="Email" placeholder="" required autocomplete="off">
-                            <label for="Email">Email</label>
+                            <input type="email" name="email" class="Email floating-input" id="Email" placeholder=" " required autocomplete="off">
+                            <label for="Email" class="floating-label">Email</label>
+                        <style>
+                        /* Floating label styles */
+                        .input-container {
+                            position: relative;
+                        }
+                        .floating-input {
+                            border: 1px solid #ccc;
+                            padding: 12px 8px 8px 36px;
+                            font-size: 16px;
+                            width: 100%;
+                            box-sizing: border-box;
+                        }
+                        .floating-label {
+                            position: absolute;
+                            left: 36px;
+                            top: 12px;
+                            color: #888;
+                            background: white;
+                            padding: 0 4px;
+                            pointer-events: none;
+                            transition: 0.2s ease all;
+                        }
+                        .floating-input:focus + .floating-label,
+                        .floating-input:not(:placeholder-shown) + .floating-label {
+                            top: -10px;
+                            left: 32px;
+                            font-size: 12px;
+                            color: #007bff;
+                        }
+                        </style>
                         </div>
                     </div>
-                    <button type="submit" class="btn-ingresar indicator-btn" id="change_password_submit">
+                        <button type="submit" class="btn-ingresar indicator-btn btn-padding-top" id="change_password_submit">
+                        <style>
+                        /* ...existing code... */
+                        .btn-padding-top {
+                            margin-top: 24px;
+                        }
+                        </style>
                         <span class="indicator-label">Enviar correo de cambio</span>
                         <span class="indicator-progress" style="display:none;">Cargando...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
